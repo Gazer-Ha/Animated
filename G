@@ -1,7 +1,7 @@
 --[[ Hello? Hello?
  
 uh, well..
- if you're hearing this and you made it to day two of scripting in Roblox..
+ if you're hearing this and you made it to second month of scripting in Roblox..
  
  
 um.. Congrats! 
