@@ -1,0 +1,12 @@
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local humanoid = char:WaitForChild("Humanoid")
+local animId = "rbxassetid://215384594"
+
+local anim = Instance.new("Animation")
+anim.AnimationId = animId
+local animTrack = humanoid:LoadAnimation(anim)
+
+animTrack:Play()
+animTrack:AdjustSpeed(0)
+animTrack.TimePosition = 0.4
