@@ -1193,8 +1193,8 @@ task.wait()
     
 end
 
-Notify("ChangeLog?", "Added Popular", 5)
-Notify("ChangeLog?", "The Ui A Bit Smol", 5)
+Notify("ChangeLog?", "Added Popular", 30)
+Notify("ChangeLog?", "The Ui A Bit Smol", 30)
 
 
 
@@ -1253,7 +1253,7 @@ AddDonate(150, 843371492)
 AddDonate(200, 843443024)
 AddDonate(250, 843132879)
 
-Notify("PLEASE", "Donate me, im poor :(", 5)
+Notify("PLEASE", "Donate me, im poor :(", 30)
 
 -- Create a frame for secret input
 local Secret = Tab:CreateFrame("Secret")
