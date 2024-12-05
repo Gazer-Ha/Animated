@@ -32,6 +32,7 @@ function Notify(titletxt, text, time)
         title.Text = titletxt
         title.TextColor3 = Color3.new(1, 1, 1)
         title.TextSize = 25
+        title.TextScaled = true
 
         message.BackgroundColor3 = Color3.new(0, 0, 0)
         message.BackgroundTransparency = 1
@@ -41,6 +42,7 @@ function Notify(titletxt, text, time)
         message.Text = text
         message.TextColor3 = Color3.new(1, 1, 1)
         message.TextSize = 15
+        message.TextScaled = true
 
         local offset = 50
         for _, notif in ipairs(Notifbro) do
@@ -116,6 +118,27 @@ local function playAudio(audioId)
     sound.Parent = game.Workspace  -- Set the parent of the sound to Workspace
     sound:Play()  -- Play the sound
 end
+
+local function adjustAnimationSpeed(animator)
+    -- Iterate over all loaded animations on the Animator
+    for _, track in pairs(animator:GetPlayingAnimationTracks()) do
+        -- Start by playing the animation with an initial speed of 2
+        track:Play()
+        track:AdjustSpeed(2)
+        
+        -- Infinite loop that alternates speed between 2 and 0.1
+        while true do
+            -- Change speed to 2
+            track:AdjustSpeed(2)
+            task.wait(0.05)  -- Wait for 0.05 seconds
+            
+            -- Change speed to 0.1
+            track:AdjustSpeed(0.1)
+            task.wait(0.05)  -- Wait for 0.05 seconds
+        end
+    end
+end
+
 local function bypassio()
 Notify("Later..", "Fuck Tags!, Not Like this", 5)
 end
@@ -327,6 +350,7 @@ end
 -- Define the animations table with animation IDs
 local Animations = {
     Idle = {
+    
 Astronaut = {"891621366", "891633237"},
 Bold = {"16738333868", "16738334710"},
 Borock = {"3293641938", "3293642554"},
@@ -342,7 +366,7 @@ Levitation = {"616006778", "616008087"},
 Mage = {"707742142", "707855907"},
 MrToilet = {"4417977954", "4417978624"},
 Ninja = {"656117400", "656118341"},
-["NFL Animation Pack"] = {"92080889861410","74451233229259"},
+NFL = {"92080889861410", "74451233229259"},
 OldSchool = {"10921230744", "10921232093"},
 Patrol = {"1149612882", "1150842221"},
 Pirate = {"750781874", "750782770"},
@@ -362,6 +386,7 @@ Toy = {"782841498", "782845736"},
 Udzal = {"3303162274", "3303162549"},
 Vampire = {"1083445855", "1083450166"},
 Werewolf = {"1083195517", "1083214717"},
+["Wicked (Popular)"] = {"118832222982049", "76049494037641"},
 ["No Boundaries (Walmart)"] = {"18747067405", "18747063918"},
 Zombie = {"616158929", "616160636"},
     },
@@ -380,7 +405,7 @@ Knight = "10921127095",
 Levitation = "616013216",
 Mage = "707897309",
 Ninja = "656121766",
-["NFL Animation Pack"] = "110358958299415",
+NFL = "110358958299415",
 OldSchool = "10921244891",
 Patrol = "1151231493",
 Pirate = "750785693",
@@ -399,6 +424,7 @@ Toy = "782843345",
 Udzal = "3303162967",
 Vampire = "1083473930",
 Werewolf = "1083178339",
+["Wicked (Popular)"] = "92072849924640",
 ["No Boundaries (Walmart)"] = "18747074203",
 Zombie = "616168032",
     },
@@ -419,7 +445,7 @@ Levitation = "616010382",
 Mage = "10921148209",
 MrToilet = "4417979645",
 Ninja = "656118852",
-["NFL Animation Pack"] = "117333533048078",
+NFL = "117333533048078",
 OldSchool = "10921240218",
 Patrol = "1150967949",
 Pirate = "750783738",
@@ -437,6 +463,7 @@ Superhero = "10921291831",
 Toy = "10921306285",
 Vampire = "10921320299",
 Werewolf = "10921336997",
+["Wicked (Popular)"] = "72301599441680",
 ["No Boundaries (Walmart)"] = "18747070484",
 Zombie = "616163682",
     },
@@ -453,13 +480,7 @@ Zombie = "616163682",
     Levitation = "616008936",
     Mage = "10921149743",
     Ninja = "656117878",
-    ["NFL Animation Pack"]  = "119846112151352",
-    
-OldSchool = "10921240218",
-Patrol = "1150967949",
-Pirate = "750783738",
-Popstar = "1212980348",
-Princess = "941015281",
+    NFL = "119846112151352",
     OldSchool = "10921242013",
     Patrol = "1148811837",
     Pirate = "750782230",
@@ -476,6 +497,7 @@ Princess = "941015281",
     Toy = "10921308158",
     Vampire = "1083455352",
     Werewolf = "1083218792",
+    ["Wicked (Popular)"] = "104325245285198",
     ["No Boundaries (Walmart)"] = "18747069148",
     Zombie = "616161997",
 },
@@ -491,8 +513,7 @@ Princess = "941015281",
     Levitation = "616005863",
     Mage = "707829716",
     Ninja = "656115606",
-    ["NFL Animation Pack"] = "129773241321032",
-    
+    NFL = "129773241321032",
     OldSchool = "10921241244",
     Patrol = "1148863382",
     Pirate = "750780242",
@@ -509,6 +530,7 @@ Princess = "941015281",
     Toy = "782846423",
     Vampire = "1083443587",
     Werewolf = "1083189019",
+    ["Wicked (Popular)"] = "121152442762481",
     ["No Boundaries (Walmart)"] = "18747062535",
     Zombie = "616157476",
 },
@@ -522,8 +544,7 @@ Princess = "941015281",
     Elder = "10921110146",
     Mage = "707894699",
     Ninja = "656118341",
-    ["NFL Animation Pack"] = "79090109939093",
-    
+    NFL = "79090109939093",
     Patrol = "1151221899",
     Knight = "10921125935",
     OldSchool = "10921244018",
@@ -542,6 +563,7 @@ Princess = "941015281",
     Toy = "10921310341",
     Vampire = "10921325443",
     Werewolf ="10921341319",
+    ["Wicked (Popular)"] = "113199415118199",
     ["No Boundaries (Walmart)"] = "18747071682",
     
     
@@ -556,6 +578,7 @@ Princess = "941015281",
     Elder = "10921108971",
     Knight = "10921125160",
     Mage = "707876443",
+    NFL = "132697394189921",
     OldSchool = "10921243048",
     PopStar = "1212998578",
     Princess = "941018893",
@@ -568,11 +591,10 @@ Princess = "941015281",
     SuperHero = "10921295495",
     Sneaky = "1132500520",
     ["Sports (Adidas)"] = "18537389531",
-    ["NFL Animation Pack"]  = "132697394189921",
-    
     Toy = "10921309319",
     Vampire = "10921324408",
     Werewolf = "10921340419",
+    ["Wicked (Popular)"] = "99384245425157",
     ["No Boundaries (Walmart)"] = "18747073181",
     Zombie = "616165109",
     
@@ -589,8 +611,7 @@ Knight = "10921125160",
 Levitation = "10921132092",
 Mage = "707826056",
 Ninja = "656114359",
-["NFL Animation Pack"]  = "134630013742019",
-
+NFL = "134630013742019",
 OldSchool = "10921229866",
 Patrol = "1148811837",
 Popstar = "1213044953",
@@ -606,6 +627,7 @@ SuperHero = "10921286911",
 Toy = "10921300839",
 Vampire = "1083439238",
 WereWolf = "10921329322",
+["Wicked (Popular)"] = "131326830509784",
 ["No Boundaries (Walmart)"] = "18747060903",
 Zombie = "616156119"
 }}
@@ -714,7 +736,7 @@ local function ResetRun()
         v:Stop()
     end
 
-    -- Wait for a short duration
+    -- Dont Change it to task.wait
     wait(0.1)
 
     -- Disable run Animation
@@ -735,7 +757,7 @@ local function ResetJump()
         v:Stop()
     end
 
-    -- Wait for a short duration
+    -- Dont Change it to task.wait
     wait(0.1)
 
     -- Disable jump Animation
@@ -781,7 +803,8 @@ local function ResetSwim()
     
 end
 
--- Function to reset swim idle animation
+
+
 local function ResetSwimIdle()
 
     local speaker = Players.LocalPlayer
@@ -1025,11 +1048,11 @@ local function SendNotification(title, text)
 end
 local anima= "Anima"
 local tion = "tion"
-local secret = "Small Update"
+local secret = "Popular And NFL"
 -- Create the Gazer and tabs
 
 
-local Gazer = library:CreateWindow(lean .. " Fe " .. anima .. tion .. " (".. secret .. "!)", "9.1.2" , 17842067503)
+local Gazer = library:CreateWindow(lean .. " Fe " .. anima .. tion .. " (".. secret .. "!)", "9.1.3" , 17842067503)
 
 local Tab = Gazer:CreateTab("@" .. loan .. "_HA")
 
@@ -1170,7 +1193,8 @@ task.wait()
     
 end
 
-
+Notify("ChangeLog?", "Added Popular", 5)
+Notify("ChangeLog?", "The Ui A Bit Smol", 5)
 
 
 
@@ -1229,6 +1253,8 @@ AddDonate(150, 843371492)
 AddDonate(200, 843443024)
 AddDonate(250, 843132879)
 
+Notify("PLEASE", "Donate me, im poor :(", 5)
+
 -- Create a frame for secret input
 local Secret = Tab:CreateFrame("Secret")
 GayLabel = Secret:CreateLabel(" ")
@@ -1248,7 +1274,10 @@ GayBox = Secret:CreateBox("Secret Code..", 10044538000, function(arg)
     elseif arg == "LAG" then
     GayLabel:UpdateLabel("FE LOW FPS ANIMATION")
     Secret:CreateButton("Code : LAG","Lag Animation Fps", function()
-    Notify("Later","Im Lazy As Byfron", 5)
+    Notify("Of course","Im Lazy As Byfron", 5)
+    Notify("nuh uh","nuh uh uh nuh", 5)
+    
+    
     end)
     
     elseif arg == "N3K0!" then
