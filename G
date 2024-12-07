@@ -119,6 +119,8 @@ local function playAudio(audioId)
     sound:Play()  -- Play the sound
 end
 
+playAudio(145303015)
+
 local function adjustAnimationSpeed(animator)
     -- Iterate over all loaded animations on the Animator
     for _, track in pairs(animator:GetPlayingAnimationTracks()) do
