@@ -119,27 +119,41 @@ local function playAudio(audioId)
     sound:Play()  -- Play the sound
 end
 
-playAudio(145303015)
 
-local function adjustAnimationSpeed(animator)
+
+local function trackupdate(track)
+    -- Ensure the track is valid and playing before modifying
+    if track and track.IsPlaying then
+        -- Increment TimePosition safely
+        local increment = track.Length / 10
+        if track.TimePosition + increment <= track.Length then
+            track.TimePosition = track.TimePosition + increment
+        else
+            track.TimePosition = track.Length
+        end
+
+        -- Adjust the speed if needed
+        track:AdjustSpeed(0)
+    end
+end
+
+local function adjustAnimationSpeed()
+    -- Get the player's character and humanoid
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+
     -- Iterate over all loaded animations on the Animator
-    for _, track in pairs(animator:GetPlayingAnimationTracks()) do
-        -- Start by playing the animation with an initial speed of 2
-        track:Play()
-        track:AdjustSpeed(2)
-        
-        -- Infinite loop that alternates speed between 2 and 0.1
-        while true do
-            -- Change speed to 2
-            track:AdjustSpeed(2)
-            task.wait(0.05)  -- Wait for 0.05 seconds
-            
-            -- Change speed to 0.1
-            track:AdjustSpeed(0.1)
-            task.wait(0.05)  -- Wait for 0.05 seconds
+    while wait(0.1) do -- Use a controlled loop to prevent performance issues
+        for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
+            trackupdate(track)
         end
     end
 end
+
+
+
+
 
 local function bypassio()
 Notify("Later..", "Fuck Tags!, Not Like this", 5)
@@ -233,7 +247,7 @@ local function applyLowFPSEffect(animationTrack)
    local originalSpeed = animationTrack.Speed 
    end
         task.wait(0.1) -- Freeze the animation for 0.05 seconds
-        animationTrack:AdjustSpeed(originalSpeed * 2) -- Double the speed temporaril
+        animationTrack.TimePosition = animationTrack.TimePosition + animationTrack.TimePosition / 10
         task.wait(0.1)
         animationTrack:AdjustSpeed(0) -- Pause again
     end
@@ -322,7 +336,7 @@ local function refresh()
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
 
-    humanoid:ChangeState(Enum.HumanoidStateType.Landed)
+    humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
     
 end
 
@@ -331,7 +345,7 @@ local function refreshswim()
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
 
-    humanoid:ChangeState(Enum.HumanoidStateType.Landed)
+    humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
     task.wait(0.1)
     humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
     
@@ -343,7 +357,7 @@ local function refreshclimb()
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
 
-    humanoid:ChangeState(Enum.HumanoidStateType.Landed)
+    humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
     task.wait(0.1)
     humanoid:ChangeState(Enum.HumanoidStateType.Climbing)
     
@@ -1197,7 +1211,7 @@ end
 
 Notify("ChangeLog?", "Added Popular", 30)
 Notify("ChangeLog?", "The Ui A Bit Smol", 30)
-
+playAudio(12221967)
 
 
 Players.LocalPlayer.CharacterAdded:Connect(function(character)
@@ -1255,7 +1269,7 @@ AddDonate(150, 843371492)
 AddDonate(200, 843443024)
 AddDonate(250, 843132879)
 
-Notify("PLEASE", "Donate me, im poor :(", 30)
+Notify("PLEASE", "Donate me, im poor :(", 1)
 
 -- Create a frame for secret input
 local Secret = Tab:CreateFrame("Secret")
@@ -1276,10 +1290,8 @@ GayBox = Secret:CreateBox("Secret Code..", 10044538000, function(arg)
     elseif arg == "LAG" then
     GayLabel:UpdateLabel("FE LOW FPS ANIMATION")
     Secret:CreateButton("Code : LAG","Lag Animation Fps", function()
-    Notify("Of course","Im Lazy As Byfron", 5)
-    Notify("nuh uh","nuh uh uh nuh", 5)
-    
-    
+    Notify("Of course","its done ", 5)
+    adjustAnimationSpeed()
     end)
     
     elseif arg == "N3K0!" then
