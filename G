@@ -125,7 +125,7 @@ local function trackupdate(track)
     -- Ensure the track is valid and playing before modifying
     if track and track.IsPlaying then
         -- Increment TimePosition safely
-        local increment = track.Length / 10
+        local increment = track.Length / 10 / track.Length
         if track.TimePosition + increment <= track.Length then
             track.TimePosition = track.TimePosition + increment
         else
@@ -144,7 +144,7 @@ local function adjustAnimationSpeed()
     local humanoid = character:WaitForChild("Humanoid")
 
     -- Iterate over all loaded animations on the Animator
-    while wait(0.1) do -- Use a controlled loop to prevent performance issues
+    while task.wait(0.1) do -- Use a controlled loop to prevent performance issues
         for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
             trackupdate(track)
         end
@@ -979,9 +979,6 @@ end
 
 
 
-
-
-
 local function PlayEmote(animationId)
 StopAnim()
 local Players = game:GetService("Players")
@@ -994,12 +991,69 @@ local humanoid = character:WaitForChild("Humanoid")
     animationTrack:Play()
     local function onMoved()
     local moveDirection = humanoid.MoveDirection
-    if moveDirection.Magnitude > 0 or moveDirection.Y ~= 0 then
+    if moveDirection.Magnitude > 0 then
         animationTrack:Stop()
     end
 end
     local checkMovement
     checkMovement = game:GetService("RunService").RenderStepped:Connect(onMoved)
+end
+
+
+local function ZeroPlayEmote(animationId)
+StopAnim()
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack:Play()
+    animationTrack:AdjustSpeed(0)
+    local function onMoved()
+    local moveDirection = humanoid.MoveDirection
+    if moveDirection.Magnitude > 0 then
+        animationTrack:Stop()
+    end
+end
+    local checkMovement
+    checkMovement = game:GetService("RunService").RenderStepped:Connect(onMoved)
+end
+
+
+local function FPlayEmote(animationId)
+StopAnim()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+
+    local animation = Instance.new("Animation")
+    animation.AnimationId = "rbxassetid://" .. animationId
+    local animationTrack = humanoid:LoadAnimation(animation)
+    animationTrack:Play()
+    local function freezeAnimation()
+        animationTrack:AdjustSpeed(0) -- Freeze the animation by setting speed to 0
+    end
+    task.delay(animationTrack.Length * 0.9, freezeAnimation)
+
+    
+
+    -- Optional: Unfreeze or resume animation (if needed)
+    -- animationTrack:AdjustSpeed(1) -- Resume animation
+
+    local function onMoved()
+        local moveDirection = humanoid.MoveDirection
+        if moveDirection.Magnitude > 0 then
+            animationTrack:Stop()
+        end
+    end
+
+    local checkMovement = game:GetService("RunService").RenderStepped:Connect(onMoved)
+
+    -- Example: Freeze the animation after 2 seconds
+    
 end
 
 
@@ -1064,7 +1118,7 @@ local function SendNotification(title, text)
 end
 local anima= "Anima"
 local tion = "tion"
-local secret = "Popular And NFL"
+local secret = "Small Emote Update"
 -- Create the Gazer and tabs
 
 
@@ -1097,6 +1151,21 @@ local function AddEmote(name, id, price)
 loadAnimation(id)
     Emote:CreateButton(name, "Price = " .. (price or "N/A"), function()
         PlayEmote(id)
+    end)
+end
+
+
+local function ZeroAddEmote(name, id, price)
+loadAnimation(id)
+    Emote:CreateButton(name, "Price = " .. (price or "N/A"), function()
+        ZeroPlayEmote(id)
+    end)
+end
+
+local function AddFEmote(name, id, price)
+loadAnimation(id)
+    Emote:CreateButton(name, "Price = " .. (price or "N/A"), function()
+        FPlayEmote(id)
     end)
 end
 
@@ -1146,14 +1215,15 @@ AddEmote("Wave", 12521004586)
 
 
 
-Emote:CreateLabel("Unreleased Emote")
-AddEmote("Soldier - Assault Fire", 4713811763)
+Emote:CreateLabel("Gear/Model Anim")
+AddFEmote("Soldier - Assault Fire", 4713811763)
 AddEmote("Soldier - Assault Aim", 4713633512)
 AddEmote("Zombie - Attack", 3489169607)
-AddEmote("Zombie - Death", 3716468774)
-AddEmote("Arm Wave", 5915773155)
-AddEmote("Head Banging", 5915779725)
-AddEmote("Face Calisthenics", 9830731012)
+AddFEmote("Zombie - Death", 3716468774)
+AddEmote("Roblox - Sleep", 2695918332)
+ZeroAddEmote("Accurate T Pose", 2516930867)
+
+
 
 local EmoteLabel = Emote:CreateLabel("Emote <Test>")
 
@@ -1209,8 +1279,8 @@ task.wait()
     
 end
 
-Notify("ChangeLog?", "Added Popular", 30)
-Notify("ChangeLog?", "The Ui A Bit Smol", 30)
+Notify("ChangeLog?", "Added Some Emote", 30)
+Notify("ChangeLog?", "Death Anim Loop", 30)
 playAudio(12221967)
 
 
