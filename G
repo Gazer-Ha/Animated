@@ -387,6 +387,7 @@ NFL = {"92080889861410", "74451233229259"},
 OldSchool = {"10921230744", "10921232093"},
 Patrol = {"1149612882", "1150842221"},
 Pirate = {"750781874", "750782770"},
+["Default Retarget"] = {"95884606664820", "95884606664820"},
 Popstar = {"1212900985", "1150842221"},
 Princess = {"941003647", "941013098"},
 R6 = {"12521158637","12521162526"},
@@ -427,6 +428,7 @@ NFL = "110358958299415",
 OldSchool = "10921244891",
 Patrol = "1151231493",
 Pirate = "750785693",
+["Default Retarget"] = "115825677624788",
 Popstar = "1212980338",
 Princess = "941028902",
 R6 = "12518152696",
@@ -468,6 +470,7 @@ NFL = "117333533048078",
 OldSchool = "10921240218",
 Patrol = "1150967949",
 Pirate = "750783738",
+["Default Retarget"] = "102294264237491",
 Popstar = "1212980348",
 Princess = "941015281",
 ["2016 Animation (mm2)"] = "4211220381",
@@ -504,6 +507,7 @@ Zombie = "616163682",
     OldSchool = "10921242013",
     Patrol = "1148811837",
     Pirate = "750782230",
+    ["Default Retarget"] = "117150377950987",
     Popstar = "1212954642",
     Princess = "941008832",
     Robot = "616090535",
@@ -538,6 +542,7 @@ Zombie = "616163682",
     OldSchool = "10921241244",
     Patrol = "1148863382",
     Pirate = "750780242",
+    ["Default Retarget"] = "110205622518029",
     Popstar = "1212900995",
     Princess = "941000007",
     Robot = "616087089",
@@ -1287,8 +1292,8 @@ task.wait()
     
 end
 
-Notify("ChangeLog?", "Added Some Emote", 30)
-Notify("ChangeLog?", "Death Anim Loop", 30)
+Notify("ChangeLog?", "Added Default Retarget", 30)
+Notify("ChangeLog?", "Added Catwalk Glam", 30)
 playAudio(12221967)
 
 
