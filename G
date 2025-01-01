@@ -904,7 +904,7 @@ end
 local function setAnimation(animationType, animationId)
 local function saveLastAnimations(lasyAnimations)
     local data = HttpService:JSONEncode(lastAnimations)
-    writefile("ihategraysex.json", data)
+    writefile("MeWhenUrMom.json", data)
 end
 
 
@@ -1012,9 +1012,9 @@ end
 local HttpService = game:GetService("HttpService")
 
 local function loadLastAnimations()
-    print("Checking if ihategraysex.json exists...")
-    if isfile("ihategraysex.json") then
-        local data = readfile("ihategraysex.json")
+    print("Checking if MeWhenUrMom.json exists...")
+    if isfile("MeWhenUrMom.json") then
+        local data = readfile("MeWhenUrMom.json")
         Notify("Yippe", "Saved Animation Found, loading it", 10)
 
         local lastAnimationsData = HttpService:JSONDecode(data)
