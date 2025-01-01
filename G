@@ -2,7 +2,6 @@ cloneref = cloneref or function(o) return o end
 local GazeGoGui = cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui") or game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 
-
 local Notifbro = {}
 
 function Notify(titletxt, text, time)
@@ -414,7 +413,7 @@ Werewolf = {"1083195517", "1083214717"},
 Zombie = {"616158929", "616160636"},
     },
     Walk = {
-
+["2016 Animation (mm2)"] = "387947975",
 Astronaut = "891667138",
 Bold = "16738340646",
 Bubbly = "910034870",
@@ -438,7 +437,7 @@ Popstar = "1212980338",
 Princess = "941028902",
 R6 = "12518152696",
 ["R15 Reanimated"] = "4211223236",
-
+["2016 Animation (mm2)"] = "4211223236",
 Robot = "616095330",
 Sneaky = "1132510133",
 ["Sports (Adidas)"] = "18537392113",
@@ -454,7 +453,7 @@ Werewolf = "1083178339",
 Zombie = "616168032",
     },
     Run = {
-
+["2016 Animation (mm2)"] = "387947975",
 Astronaut = "10921039308",
 Bold = "16738337225",
 Bubbly = "10921057244",
@@ -478,7 +477,7 @@ Pirate = "750783738",
 ["Default Retarget"] = "102294264237491",
 Popstar = "1212980348",
 Princess = "941015281",
-
+["2016 Animation (mm2)"] = "4211220381",
 R6 = "12518152696",
 ["R15 Reanimated"] = "4211220381",
 Robot = "10921250460",
@@ -1059,6 +1058,8 @@ end
 
 loadLastAnimations()
 
+
+
 local function PlayEmote(animationId)
 StopAnim()
 local Players = game:GetService("Players")
@@ -1308,88 +1309,56 @@ ZeroAddEmote("Accurate T Pose", 2516930867)
 local EmoteLabel = Emote:CreateLabel("Emote <Test>")
 
 
-local count = 0
+
 
 
 for name, ids in pairs(Animations.Idle) do
+task.wait()
     createButton(Idle, name, "Idle", ids)
-  count = count + 1
-    if count % 5 == 0 then
-        task.wait()
-        count = 0
-    end
+  
 end
 
 for name, id in pairs(Animations.Walk) do
-
+task.wait()
     createButton(Walk, name, "Walk", id)
-count = count + 1
-    if count % 5 == 0 then
-        task.wait()
-        count = 0
-    end
+   
 end
 
 for name, id in pairs(Animations.Run) do
-
+task.wait()
     createButton(Run, name, "Run", id)
-   count = count + 1
-    if count % 5 == 0 then
-        task.wait()
-        count = 0
-    end
+    
 end
 
-
-
 for name, id in pairs(Animations.Jump) do
+task.wait()
     createButton(Jump, name, "Jump", id)
-    count = count + 1
-    if count % 5 == 0 then
-        task.wait()
-        count = 0
-    end
+   
 end
 
 for name, id in pairs(Animations.Fall) do
+task.wait()
     createButton(Fall, name, "Fall", id)
- count = count + 1
-    if count % 5 == 0 then
-        task.wait()
-        count = 0
-    end
+ 
 end
 
-
 for name, id in pairs(Animations.SwimIdle) do
+task.wait()
     createButton(SwimIdle, name, "SwimIdle", id)
-count = count + 1
-    if count % 5 == 0 then
-        task.wait()
-        count = 0
-    end
+
 end
 
 for name, id in pairs(Animations.Swim) do
-
+task.wait()
     createButton(Swim, name, "Swim", id)
-count = count + 1
-    if count % 5 == 0 then
-        task.wait()
-        count = 0
-    end
+
 end
 
 for name, id in pairs(Animations.Climb) do
 task.wait()
     createButton(Climb, name, "Climb", id)
-    count = count + 1
-    if count % 5 == 0 then
-        task.wait()
-        count = 0
-    end
+    
 end
-
 
 
 
@@ -1464,8 +1433,8 @@ GayBox = Secret:CreateBox("Secret Code..", 10044538000, function(arg)
         GayLabel:UpdateLabel("Join Discord To Get Secret Codes")
         task.wait(1)
         GayLabel:UpdateLabel(" ")
-     elseif arg == "2016AnimsIsReal" then
-     	 loadstring(game:HttpGet("https://raw.githubusercontent.com/FilteringEnabled/FE/main/2016anims"))()
+     elseif arg == "S0N1C" then
+     Notify("WIP","BRO STOP",10)
     elseif arg == "DEVM0DE1" then
         Notify("Gazer","Bro.",10)
     elseif arg == "LAG" then
