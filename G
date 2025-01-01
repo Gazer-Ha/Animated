@@ -1010,7 +1010,54 @@ wait()
 unfreeze()
 end
 
+local HttpService = game:GetService("HttpService")
 
+local function loadLastAnimations()
+    print("Checking if LastAnimations.json exists...")
+    if isfile("LastAnimations.json") then
+        local data = readfile("LastAnimations.json")
+        Notify("Yippe", "Saved Animation Found, loading it", 10)
+
+        local lastAnimationsData = HttpService:JSONDecode(data)
+if lastAnimationsData.Idle then
+    setAnimation("Idle", lastAnimationsData.Idle)
+end
+
+if lastAnimationsData.Walk then
+    setAnimation("Walk", lastAnimationsData.Walk)
+end
+
+if lastAnimationsData.Run then
+    setAnimation("Run", lastAnimationsData.Run)
+end
+
+if lastAnimationsData.Jump then
+    setAnimation("Jump", lastAnimationsData.Jump)
+end
+
+if lastAnimationsData.Fall then
+    setAnimation("Fall", lastAnimationsData.Fall)
+end
+
+if lastAnimationsData.Climb then
+    setAnimation("Climb", lastAnimationsData.Climb)
+end
+
+if lastAnimationsData.Swim then
+    setAnimation("Swim", lastAnimationsData.Swim)
+end
+
+if lastAnimationsData.SwimIdle then
+    setAnimation("SwimIdle", lastAnimationsData.SwimIdle)
+end
+        
+    else
+        Notify("First?", "No Saved Animations Found", 5)
+    end
+end
+
+
+loadLastAnimations()
 
 local function PlayEmote(animationId)
 StopAnim()
@@ -1261,107 +1308,92 @@ ZeroAddEmote("Accurate T Pose", 2516930867)
 local EmoteLabel = Emote:CreateLabel("Emote <Test>")
 
 
-
+local count = 0
 
 
 for name, ids in pairs(Animations.Idle) do
-task.wait()
     createButton(Idle, name, "Idle", ids)
-  
+  count = count + 1
+    if count % 5 == 0 then
+        task.wait()
+        count = 0
+    end
 end
 
 for name, id in pairs(Animations.Walk) do
-task.wait()
+
     createButton(Walk, name, "Walk", id)
-   
+count = count + 1
+    if count % 5 == 0 then
+        task.wait()
+        count = 0
+    end
 end
 
 for name, id in pairs(Animations.Run) do
-task.wait()
+
     createButton(Run, name, "Run", id)
-    
+   count = count + 1
+    if count % 5 == 0 then
+        task.wait()
+        count = 0
+    end
 end
 
+
+
 for name, id in pairs(Animations.Jump) do
-task.wait()
     createButton(Jump, name, "Jump", id)
-   
+    count = count + 1
+    if count % 5 == 0 then
+        task.wait()
+        count = 0
+    end
 end
 
 for name, id in pairs(Animations.Fall) do
-task.wait()
     createButton(Fall, name, "Fall", id)
- 
+ count = count + 1
+    if count % 5 == 0 then
+        task.wait()
+        count = 0
+    end
 end
 
-for name, id in pairs(Animations.SwimIdle) do
-task.wait()
-    createButton(SwimIdle, name, "SwimIdle", id)
 
+for name, id in pairs(Animations.SwimIdle) do
+    createButton(SwimIdle, name, "SwimIdle", id)
+count = count + 1
+    if count % 5 == 0 then
+        task.wait()
+        count = 0
+    end
 end
 
 for name, id in pairs(Animations.Swim) do
-task.wait()
-    createButton(Swim, name, "Swim", id)
 
+    createButton(Swim, name, "Swim", id)
+count = count + 1
+    if count % 5 == 0 then
+        task.wait()
+        count = 0
+    end
 end
 
 for name, id in pairs(Animations.Climb) do
 task.wait()
     createButton(Climb, name, "Climb", id)
-    
-end
-
-
-
-local HttpService = game:GetService("HttpService")
-
-local function loadLastAnimations()
-    print("Checking if LastAnimations.json exists...")
-    if isfile("LastAnimations.json") then
-        local data = readfile("LastAnimations.json")
-        Notify("Yippe", "Saved Animation Found, loading it", 10)
-
-        local lastAnimationsData = HttpService:JSONDecode(data)
-if lastAnimationsData.Idle then
-    setAnimation("Idle", lastAnimationsData.Idle)
-end
-
-if lastAnimationsData.Walk then
-    setAnimation("Walk", lastAnimationsData.Walk)
-end
-
-if lastAnimationsData.Run then
-    setAnimation("Run", lastAnimationsData.Run)
-end
-
-if lastAnimationsData.Jump then
-    setAnimation("Jump", lastAnimationsData.Jump)
-end
-
-if lastAnimationsData.Fall then
-    setAnimation("Fall", lastAnimationsData.Fall)
-end
-
-if lastAnimationsData.Climb then
-    setAnimation("Climb", lastAnimationsData.Climb)
-end
-
-if lastAnimationsData.Swim then
-    setAnimation("Swim", lastAnimationsData.Swim)
-end
-
-if lastAnimationsData.SwimIdle then
-    setAnimation("SwimIdle", lastAnimationsData.SwimIdle)
-end
-        
-    else
-        Notify("First?", "No Saved Animations Found", 5)
+    count = count + 1
+    if count % 5 == 0 then
+        task.wait()
+        count = 0
     end
 end
 
 
-loadLastAnimations()
+
+
+
 
 Players.LocalPlayer.CharacterAdded:Connect(function(character)
 Wait1()
