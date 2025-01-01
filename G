@@ -1,10 +1,12 @@
+cloneref = cloneref or function(o) return o end
 local GazeGoGui = cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui") or game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
 
 
 local Notifbro = {}
 
 function Notify(titletxt, text, time)
-    -- Create a coroutine for the notification function
+    
     coroutine.wrap(function()
         local GUI = Instance.new("ScreenGui")
         local Main = Instance.new("Frame", GUI)
@@ -319,6 +321,9 @@ end
 
 local lastAnimations = {} -- Table to store last used animations
 
+
+
+
 local function StopAnim()
     local speaker = Players.LocalPlayer
     local Char = speaker.Character
@@ -409,7 +414,7 @@ Werewolf = {"1083195517", "1083214717"},
 Zombie = {"616158929", "616160636"},
     },
     Walk = {
-["2016 Animation (mm2)"] = "387947975",
+
 Astronaut = "891667138",
 Bold = "16738340646",
 Bubbly = "910034870",
@@ -433,7 +438,7 @@ Popstar = "1212980338",
 Princess = "941028902",
 R6 = "12518152696",
 ["R15 Reanimated"] = "4211223236",
-["2016 Animation (mm2)"] = "4211223236",
+
 Robot = "616095330",
 Sneaky = "1132510133",
 ["Sports (Adidas)"] = "18537392113",
@@ -449,7 +454,7 @@ Werewolf = "1083178339",
 Zombie = "616168032",
     },
     Run = {
-["2016 Animation (mm2)"] = "387947975",
+
 Astronaut = "10921039308",
 Bold = "16738337225",
 Bubbly = "10921057244",
@@ -473,7 +478,7 @@ Pirate = "750783738",
 ["Default Retarget"] = "102294264237491",
 Popstar = "1212980348",
 Princess = "941015281",
-["2016 Animation (mm2)"] = "4211220381",
+
 R6 = "12518152696",
 ["R15 Reanimated"] = "4211220381",
 Robot = "10921250460",
@@ -697,6 +702,12 @@ end
 
 
 
+local HttpService = game:GetService("HttpService")
+
+-- Save the last animations to a file
+
+
+-- Call this function whenever `lastAnimations` is updated
 
 
 
@@ -727,9 +738,11 @@ local function ResetIdle()
     end
 
     -- Disable idle Animation
+    pcall(function()
     local Animate = Char.Animate
     Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=0"
     Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=0"
+    end)
 end
 
 -- Function to reset walk animation
@@ -746,9 +759,10 @@ local function ResetWalk()
     end
 
     -- Disable walk Animation
+    pcall(function()
     local Animate = Char.Animate
     Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=0"
-    
+    end)
 end
 
 -- Function to reset run animation
@@ -769,9 +783,10 @@ local function ResetRun()
     wait(0.1)
 
     -- Disable run Animation
+    pcall(function()
     local Animate = Char.Animate
     Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=0"
-    
+    end)
 end
 
 local function ResetJump()
@@ -788,11 +803,11 @@ local function ResetJump()
 
     -- Dont Change it to task.wait
     wait(0.1)
-
+pcall(function()
     -- Disable jump Animation
     local Animate = Char.Animate
     Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=0"
-    
+    end)
 end
 
 -- Function to reset fall animation
@@ -809,9 +824,10 @@ local function ResetFall()
     end
 
     -- Disable fall Animation
+    pcall(function()
     local Animate = Char.Animate
     Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=0"
-    
+    end)
 end
 
 local function ResetSwim()
@@ -825,11 +841,11 @@ local function ResetSwim()
     
         v:Stop()
     end
-
+pcall(function()
     -- Disable swim Animation
     local Animate = Char.Animate
     Animate.swim.Swim.AnimationId = "http://www.roblox.com/asset/?id=0"
-    
+    end)
 end
 
 
@@ -845,11 +861,11 @@ local function ResetSwimIdle()
     
         v:Stop()
     end
-
+pcall(function()
     -- Disable swim idle Animation
     local Animate = Char.Animate
     Animate.swimidle.SwimIdle.AnimationId = "http://www.roblox.com/asset/?id=0"
-    
+    end)
 end
 
 
@@ -864,11 +880,11 @@ local function ResetClimb()
     
         v:Stop()
     end
-
+pcall(function()
     -- Disable swim idle Animation
     local Animate = Char.Animate
     Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=0"
-    
+    end)
 end
 
 -- Function to set swim animation based on animation ID
@@ -887,7 +903,10 @@ end
 
 -- Function to set animation based on animation type and ID
 local function setAnimation(animationType, animationId)
-
+local function saveLastAnimations(lasyAnimations)
+    local data = HttpService:JSONEncode(lastAnimations)
+    writefile("LastAnimations.json", data)
+end
 
 
     local speaker = Players.LocalPlayer
@@ -986,6 +1005,7 @@ elseif animationType == "SwimIdle" then
     Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=" .. animationId
     refreshclimb()
 end  
+saveLastAnimations(lastAnimations)
 wait()
 unfreeze()
 end
@@ -1292,10 +1312,56 @@ task.wait()
     
 end
 
-Notify("ChangeLog?", "Added Default Retarget", 30)
-Notify("ChangeLog?", "Added Catwalk Glam", 30)
-playAudio(12221967)
 
+
+local HttpService = game:GetService("HttpService")
+
+local function loadLastAnimations()
+    print("Checking if LastAnimations.json exists...")
+    if isfile("LastAnimations.json") then
+        local data = readfile("LastAnimations.json")
+        Notify("Yippe", "Saved Animation Found, loading it", 10)
+
+        local lastAnimationsData = HttpService:JSONDecode(data)
+if lastAnimationsData.Idle then
+    setAnimation("Idle", lastAnimationsData.Idle)
+end
+
+if lastAnimationsData.Walk then
+    setAnimation("Walk", lastAnimationsData.Walk)
+end
+
+if lastAnimationsData.Run then
+    setAnimation("Run", lastAnimationsData.Run)
+end
+
+if lastAnimationsData.Jump then
+    setAnimation("Jump", lastAnimationsData.Jump)
+end
+
+if lastAnimationsData.Fall then
+    setAnimation("Fall", lastAnimationsData.Fall)
+end
+
+if lastAnimationsData.Climb then
+    setAnimation("Climb", lastAnimationsData.Climb)
+end
+
+if lastAnimationsData.Swim then
+    setAnimation("Swim", lastAnimationsData.Swim)
+end
+
+if lastAnimationsData.SwimIdle then
+    setAnimation("SwimIdle", lastAnimationsData.SwimIdle)
+end
+        
+    else
+        Notify("First?", "No Saved Animations Found", 5)
+    end
+end
+
+
+loadLastAnimations()
 
 Players.LocalPlayer.CharacterAdded:Connect(function(character)
 Wait1()
@@ -1366,8 +1432,8 @@ GayBox = Secret:CreateBox("Secret Code..", 10044538000, function(arg)
         GayLabel:UpdateLabel("Join Discord To Get Secret Codes")
         task.wait(1)
         GayLabel:UpdateLabel(" ")
-     elseif arg == "S0N1C" then
-     Notify("WIP","BRO STOP",10)
+     elseif arg == "2016AnimsIsReal" then
+     	 loadstring(game:HttpGet("https://raw.githubusercontent.com/FilteringEnabled/FE/main/2016anims"))()
     elseif arg == "DEVM0DE1" then
         Notify("Gazer","Bro.",10)
     elseif arg == "LAG" then
