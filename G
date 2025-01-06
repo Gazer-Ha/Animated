@@ -1199,11 +1199,11 @@ local function SendNotification(title, text)
 end
 local anima= "Anima"
 local tion = "tion"
-local secret = "Small Emote Update"
+local secret = "Another Small Update"
 -- Create the Gazer and tabs
 
 
-local Gazer = library:CreateWindow(lean .. " Fe " .. anima .. tion .. " (".. secret .. "!)", "9.1.3" , 17842067503)
+local Gazer = library:CreateWindow(lean .. " Fe " .. anima .. tion .. " (".. secret .. "!)", "9.9.1" , 17842067503)
 
 local Tab = Gazer:CreateTab("@" .. loan .. "_HA")
 
@@ -1302,6 +1302,8 @@ AddEmote("Soldier - Assault Aim", 4713633512)
 AddEmote("Zombie - Attack", 3489169607)
 AddFEmote("Zombie - Death", 3716468774)
 AddEmote("Roblox - Sleep", 2695918332)
+AddEmote("Roblox - Quake", 2917204509)
+AddEmote("Roblox - Rifle Reload", 3972131105)
 ZeroAddEmote("Accurate T Pose", 2516930867)
 
 
@@ -1408,16 +1410,20 @@ end)
 
 Donate:CreateLabel("Copy Gamepass Link")
 Donate:CreateLabel("Or Buy (if supported)")
+AddDonate(1, 1023295253)
 AddDonate(2, 844706573)
+AddDonate(3, 1023179481)
 AddDonate(7, 844634872)
 AddDonate(10, 843153917)
-AddDonate(20, 843481098)
+AddDonate(20, 843466025)
 AddDonate(27, 843315711)
 AddDonate(50, 843288679)
 AddDonate(100, 843403232)
 AddDonate(150, 843371492)
-AddDonate(200, 843443024)
-AddDonate(250, 843132879)
+AddDonate(1000, 1023447169)
+AddDonate(1430, 1023583012)
+
+
 
 Notify("PLEASE", "Donate me, im poor :(", 1)
 
