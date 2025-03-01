@@ -105,13 +105,10 @@ print("Running Script, May Lags A Bit")
 
 
 
-local lean = "Ga" .. "zer"
-local xhahaha = "H"
-local Vadrift = lean .. "-" .. xhahaha .. "a"
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/" .. Vadrift .. "/Valiant-Ui-Lib-Gazed-/main/Valiant.txt"))()
+local lean = "Gazer"
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Gazer-Ha/Animated/refs/heads/main/A"))()
 local loan = lean
-local gaysex = "Gazer Fe Animation Editor"
-local Kakakak = "Tentu Gw Obfuscate Kontol"
+
 local function playAudio(audioId)
     local sound = Instance.new("Sound")  -- Create a new Sound instance
     sound.SoundId = "rbxassetid://" .. audioId  -- Set the SoundId using the provided ID
@@ -1203,7 +1200,7 @@ local secret = "Another Small Update"
 -- Create the Gazer and tabs
 
 
-local Gazer = library:CreateWindow(lean .. " Fe " .. anima .. tion .. " (".. secret .. "!)", "9.9.1" , 17842067503)
+local Gazer = library:CreateWindow(lean .. " Fe Animation (Fixed Im Mad)", "1.0.0.0", 17842067503)
 
 local Tab = Gazer:CreateTab("@" .. loan .. "_HA")
 
