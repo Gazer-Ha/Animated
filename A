@@ -2,21 +2,43 @@ local cloneref = cloneref or function(o) return o end
 COREGUI = cloneref(game:GetService("CoreGui"))
 Players = cloneref(game:GetService("Players"))
 
+if not game:IsLoaded() then
+    local notLoaded = Instance.new("Message")
+    notLoaded.Parent = COREGUI
+    notLoaded.Text = "game Loading.."
+    game.Loaded:Wait()
+    notLoaded:Destroy()
+end
+
+local MinimizeGui = false
+local Page = nil
+local Tabs = nil
+
+local camera = workspace.CurrentCamera
+if not camera then
+    warn("CurrentCamera is not available.")
+    return
+end
+
+
 -- extra credits to twink marie
 
 local library = {}
 
-local request = request or http_request or (identifyexecutor() == "Synapse X" and syn.request) or (http and http.request)
+local request = request or http_request or (identifyexecutor and identifyexecutor() == "Synapse X" and syn.request) or (http and http.request)
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/cypherdh/Script-Library/main/InstanceProtect"))()
+if request then
+    loadstring(request({Url="https://raw.githubusercontent.com/cypherdh/Script-Library/main/InstanceProtect",Method="GET"}).Body)()
+else
+    warn("HTTP request function is not available.")
+end
+
 
 local UIS = game:GetService("UserInputService")
 
 local TS = game:GetService("TweenService")
 
-local screenSize = workspace.CurrentCamera.ViewportSize
-local minSize = math.min(screenSize.X, screenSize.Y)
-local gaysize = minSize / 0.935
+
 
 function library:CreateWindow(name, version, icon)
 
@@ -51,6 +73,9 @@ function library:CreateWindow(name, version, icon)
 	local Minimize = Instance.new("ImageButton")
 
 	local _4pxShadow2px_2 = Instance.new("ImageLabel")
+
+
+
 	local RandomString = ""
 
 	for i = 1, math.random(3,20) do
@@ -64,6 +89,9 @@ function library:CreateWindow(name, version, icon)
 	ProtectInstance(Window)
 
 -- Assuming InsaneGay is already defined and parented somewhere above this code
+
+
+
 -- Create a button to toggle InsaneGay visibility
 
 local ToggleHideButton = Instance.new("TextButton")
@@ -79,16 +107,30 @@ ToggleHideButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ToggleHideButton.Text = "Hide"
 
 ToggleHideButton.Parent = InsaneGay
+
+
+
 -- Function to toggle InsaneGay visibility
 
 local function ToggleVisibility()
     if ToggleHideButton.Text == "Show" then
     
+    local camera = workspace.CurrentCamera
+if not camera then
+    warn("CurrentCamera is not available.")
+    return
+end
+
+local screenSize = camera.ViewportSize
+local windowSize = screenSize.Magnitude / (math.sqrt(2) * 0.935) -- More balanced scaling
+
+    
+    
 local screenSize = workspace.CurrentCamera.ViewportSize
 local minSize = math.min(screenSize.X, screenSize.Y)
-local gaysize = minSize / 0.935
+local windowSize = minSize / 0.935 -- Ensure this calculation is necessary
 
-        Window.Size = UDim2.new(0, gaysize,0, gaysize)
+        Window.Size = UDim2.new(0, windowSize,0, windowSize)
 
         ToggleHideButton.Text = "Hide"
 
@@ -102,16 +144,28 @@ else
     end
 
 end
+
+
+
 -- Connect the toggle function to the button click event
 
-ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = RandomString
+ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)
 
-	InsaneGay.Parent = game:GetService("CoreGui")
+
+
+
+
+	InsaneGay.Name = RandomString
+
+	InsaneGay.Parent = cloneref(game:GetService("CoreGui"))
 
 	InsaneGay.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	
-            
+    
+
+
+        
 	Window.Name = "Window"
 	Window.Parent = InsaneGay
 	Window.BackgroundColor3 = Color3.fromRGB(49, 49, 59)
@@ -122,6 +176,9 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 	UICorner.CornerRadius = UDim.new(0, 4)
 
 	UICorner.Parent = Window
+
+
+
 	TitleBar.Name = "TitleBar"
 
 	TitleBar.Parent = Window
@@ -131,6 +188,9 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 	TitleBar.BackgroundTransparency = 1.000
 
 	TitleBar.Size = UDim2.new(1, 0, 0, 30)
+
+
+
 	Icon.Name = "Icon"
 
 	Icon.Parent = TitleBar
@@ -146,6 +206,9 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 	Icon.Image = "rbxassetid://"..icon
 
 	Icon.ImageColor3 = Color3.fromRGB(135, 255, 135)
+
+
+
 	MainTitle.Name = "Title"
 
 	MainTitle.Parent = TitleBar
@@ -167,6 +230,9 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 	MainTitle.TextSize = 12.000
 
 	MainTitle.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 	TitleUnderline.Name = "TitleUnderline"
 
 	TitleUnderline.Parent = TitleBar
@@ -178,7 +244,13 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 	TitleUnderline.Position = UDim2.new(0, 0, 1, 0)
 
 	TitleUnderline.Size = UDim2.new(1, 0, 0, 1)
+
+
+
 	UIGradient.Parent = TitleUnderline
+
+
+
 	Bar.Name = "Bar"
 
 	Bar.Parent = TitleUnderline
@@ -192,6 +264,9 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 	Bar.Position = UDim2.new(0, 6, 0, 0)
 
 	Bar.Size = UDim2.new(0, 18, 1, 0)
+
+
+
 	Bar_2.Name = "Bar"
 
 	Bar_2.Parent = TitleUnderline
@@ -205,6 +280,9 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 	Bar_2.Position = UDim2.new(1, -24, 0, 0)
 
 	Bar_2.Size = UDim2.new(0, 18, 1, 0)
+
+
+
 	Close.Name = "Close"
 
 	Close.Parent = TitleBar
@@ -222,6 +300,9 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 	Close.ImageRectOffset = Vector2.new(284, 4)
 
 	Close.ImageRectSize = Vector2.new(24, 24)
+
+
+
 	Minimize.Name = "Minimize"
 
 	Minimize.Parent = TitleBar
@@ -235,6 +316,9 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 	Minimize.Size = UDim2.new(0, 26, 0, 30)
 
 	Minimize.Image = "http://www.roblox.com/asset/?id=6035067836"
+
+
+
 	_4pxShadow2px_2.Name = "4pxShadow(2px)"
 
 	_4pxShadow2px_2.Parent = Window
@@ -258,15 +342,18 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 	_4pxShadow2px_2.ScaleType = Enum.ScaleType.Slice
 
 	_4pxShadow2px_2.SliceCenter = Rect.new(17, 17, 283, 283)
+
+
+
 	Close.MouseButton1Click:Connect(function()
 
-		TS:Create(Window, TweenInfo.new(0.5), {Size = UDim2.new(0, gaysize, 0, 0)}):Play()
+		TS:Create(Window, TweenInfo.new(0.5), {Size = UDim2.new(0, windowSize, 0, 0)}):Play()
 
 		repeat
 
 			wait()
 
-		until Window.Size == UDim2.new(0, gaysize, 0, 0)
+		until Window.Size == UDim2.new(0, windowSize, 0, 0)
 
 		wait(0.1)
 
@@ -281,17 +368,20 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 		InsaneGay:Remove()
 
 	end)
+
+
+
 	Minimize.MouseButton1Click:Connect(function()
 
 		if not MinimizeGui then
 
 			MinimizeGui = true
 
-			if Window.Size == UDim2.new(0, gaysize,0, gaysize) then
+			if Window.Size == UDim2.new(0, windowSize,0, windowSize) then
 
-				TS:Create(Window, TweenInfo.new(0.25), {Size = UDim2.new(0, gaysize,0, 32)}):Play()
+				TS:Create(Window, TweenInfo.new(0.25), {Size = UDim2.new(0, windowSize,0, 32)}):Play()
 
-				repeat wait() until Window.Size == UDim2.new(0, gaysize,0, 32)
+				repeat wait() until Window.Size == UDim2.new(0, windowSize,0, 32)
 
 				if Page and Page.Visible == true then
 
@@ -311,7 +401,7 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 
 			MinimizeGui = false
 
-			if Window.Size == UDim2.new(0, gaysize,0, 32) then
+			if Window.Size == UDim2.new(0, windowSize,0, 32) then
 
 				if Page and Page.Visible == true then
 
@@ -325,13 +415,19 @@ ToggleHideButton.MouseButton1Click:Connect(ToggleVisibility)	InsaneGay.Name = Ra
 
 				end
 
-				TS:Create(Window, TweenInfo.new(0.25), {Size = UDim2.new(0, gaysize,0, gaysize)}):Play()
+				TS:Create(Window, TweenInfo.new(0.25), {Size = UDim2.new(0, windowSize,0, windowSize)}):Play()
 
 			end
 
 		end
 
-	end)	
+	end)
+
+
+
+
+
+	
 
 -- Dragify function
 
@@ -344,6 +440,9 @@ function dragify(Frame)
 	local dragStart = nil
 
 	local startPos = nil
+
+
+
 	local function updateInput(input)
 
 		local Delta = input.Position - dragStart
@@ -359,6 +458,9 @@ function dragify(Frame)
 		TS:Create(Frame, TweenInfo.new(0.25), {Position = Position}):Play()
 
 	end
+
+
+
 	Frame.InputBegan:Connect(function(input)
 
 		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UIS:GetFocusedTextBox() == nil then
@@ -394,6 +496,9 @@ function dragify(Frame)
 		end
 
 	end)
+
+
+
 	UIS.InputChanged:Connect(function(input)
 
 		if input == dragInput and dragToggle then
@@ -405,6 +510,9 @@ function dragify(Frame)
 	end)
 
 end
+
+
+
 -- Another Dragify function (dragify2)
 
 function dragify2(Frame)
@@ -416,6 +524,9 @@ function dragify2(Frame)
 	local dragStart2 = nil
 
 	local startPos2 = nil
+
+
+
 	local function updateInput2(input)
 
 		local Delta2 = input.Position - dragStart2
@@ -431,6 +542,9 @@ function dragify2(Frame)
 		TS:Create(Frame, TweenInfo.new(0.25), {Position = Position2}):Play()
 
 	end
+
+
+
 	Frame.InputBegan:Connect(function(input)
 
 		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UIS:GetFocusedTextBox() == nil then
@@ -466,6 +580,9 @@ function dragify2(Frame)
 		end
 
 	end)
+
+
+
 	UIS.InputChanged:Connect(function(input)
 
 		if input == dragInput2 and dragToggle2 then
@@ -478,21 +595,30 @@ function dragify2(Frame)
 
 end
 
+
+
+
+
+
+
 	dragify(Window)
 
-	TS:Create(Window, TweenInfo.new(0.5), {Size = UDim2.new(0, gaysize, 0, 0)}):Play()
+	TS:Create(Window, TweenInfo.new(0.5), {Size = UDim2.new(0, windowSize, 0, 0)}):Play()
 
-	repeat wait() until Window.Size == UDim2.new(0, gaysize, 0, 0)
+	repeat wait() until Window.Size == UDim2.new(0, windowSize, 0, 0)
 
 	wait(0.1)
 
-	TS:Create(Window, TweenInfo.new(0.5), {Size = UDim2.new(0, gaysize, 0, gaysize)}):Play()
+	TS:Create(Window, TweenInfo.new(0.5), {Size = UDim2.new(0, windowSize, 0, windowSize)}):Play()
 
 dragify2(ToggleHideButton)
 
 	--end
 
 	local tabs = {}
+
+
+
 	function tabs:CreateTab(name)
 
 		name = name or "Section 1"
@@ -510,6 +636,9 @@ dragify2(ToggleHideButton)
 		--local PageButton = Instance.new("TextButton") --LATER
 
 		local Indicator = Instance.new("Frame")
+
+
+
 		Tabs.Name = "Tabs"
 
 		Tabs.Parent = Window
@@ -519,9 +648,15 @@ dragify2(ToggleHideButton)
 		Tabs.Position = UDim2.new(0, 5, 0, 36)
 
 		Tabs.Size = UDim2.new(0, 140, 1, -41)
+
+
+
 		UICorner_2.CornerRadius = UDim.new(0, 4)
 
 		UICorner_2.Parent = Tabs
+
+
+
 		SectionLabel.Name = "SectionLabel"
 
 		SectionLabel.Parent = Tabs
@@ -543,11 +678,17 @@ dragify2(ToggleHideButton)
 		SectionLabel.TextSize = 12.000
 
 		SectionLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 		UIListLayout.Parent = Tabs
 
 		UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
 
 		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+
+
 		--LATER
 
 		--[[PageButton.Name = "PageButton"
@@ -569,6 +710,9 @@ dragify2(ToggleHideButton)
 		PageButton.TextSize = 12.000
 
 		PageButton.TextXAlignment = Enum.TextXAlignment.Left]]
+
+
+
 		Indicator.Name = "Indicator"
 
 		Indicator.Parent = Tabs
@@ -594,6 +738,9 @@ dragify2(ToggleHideButton)
 			name = name or "Page 1"
 
 			--Creating Page
+
+
+
 			local Page = Instance.new("ScrollingFrame")
 
 			local UICorner_3 = Instance.new("UICorner")
@@ -617,13 +764,22 @@ dragify2(ToggleHideButton)
 			local UICorner_5 = Instance.new("UICorner")
 
 			local SectionContainer = Instance.new("Frame")
+
+
+
 			local Header = Instance.new("Frame")
 
 			local UICorner_23 = Instance.new("UICorner")
 
 			local UIGradient_2 = Instance.new("UIGradient")
 
-			local _4pxShadow2px_2 = Instance.new("ImageLabel")			Page.Name = "Page"
+			local _4pxShadow2px_2 = Instance.new("ImageLabel")
+
+
+
+
+
+			Page.Name = "Page"
 
 			Page.Parent = Window
 
@@ -646,9 +802,15 @@ dragify2(ToggleHideButton)
 			Page.AutomaticCanvasSize = "Y"
 
 			Page.Visible = false
+
+
+
 			UICorner_3.CornerRadius = UDim.new(0, 4)
 
 			UICorner_3.Parent = Page
+
+
+
 			UIListLayout_2.Parent = Page
 
 			UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -656,6 +818,9 @@ dragify2(ToggleHideButton)
 			UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
 
 			UIListLayout_2.Padding = UDim.new(0, 4)
+
+
+
 			UIPadding.Parent = Page
 
 			UIPadding.PaddingBottom = UDim.new(0, 4)
@@ -665,6 +830,9 @@ dragify2(ToggleHideButton)
 			UIPadding.PaddingRight = UDim.new(0, 4)
 
 			UIPadding.PaddingTop = UDim.new(0, 4)
+
+
+
 			SearchBar.Name = "SearchBar"
 
 			SearchBar.Parent = Page
@@ -672,9 +840,15 @@ dragify2(ToggleHideButton)
 			SearchBar.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
 
 			SearchBar.Size = UDim2.new(1, 0, 0, 30)
+
+
+
 			UICorner_4.CornerRadius = UDim.new(0, 4)
 
 			UICorner_4.Parent = SearchBar
+
+
+
 			SearchIcon.Name = "SearchIcon"
 
 			SearchIcon.Parent = SearchBar
@@ -690,6 +864,9 @@ dragify2(ToggleHideButton)
 			SearchIcon.Image = "rbxassetid://10045418551"
 
 			SearchIcon.ImageColor3 = Color3.fromRGB(135, 255, 135)
+
+
+
 			Bar_3.Name = "Bar"
 
 			Bar_3.Parent = SearchBar
@@ -699,6 +876,9 @@ dragify2(ToggleHideButton)
 			Bar_3.Position = UDim2.new(0, 30, 0, 10)
 
 			Bar_3.Size = UDim2.new(0, 1, 1, -20)
+
+
+
 			SearchBox.Name = "SearchBox"
 
 			SearchBox.Parent = SearchBar
@@ -724,6 +904,9 @@ dragify2(ToggleHideButton)
 			SearchBox.TextSize = 12.000
 
 			SearchBox.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 			Section.Name = "Section"
 
 			Section.Parent = Page
@@ -737,9 +920,15 @@ dragify2(ToggleHideButton)
 			Section.Position = UDim2.new(0.0170000363, 0, 0.0968660116, 0)
 
 			Section.Size = UDim2.new(0.966000021, 0, 0.159766689, 117)
+
+
+
 			UICorner_5.CornerRadius = UDim.new(0, 4)
 
 			UICorner_5.Parent = Section
+
+
+
 			SectionContainer.Name = "SectionContainer"
 
 			SectionContainer.Parent = Section
@@ -755,6 +944,9 @@ dragify2(ToggleHideButton)
 			SectionContainer.Size = UDim2.new(1, 0, 1.0033654, -1)
 
 			SectionContainer.ZIndex = 2
+
+
+
 			Header.Name = "Header"
 
 			Header.Parent = Section
@@ -764,17 +956,29 @@ dragify2(ToggleHideButton)
 			Header.BorderSizePixel = 0
 
 			Header.Size = UDim2.new(1, 0, 0, 8)
+
+
+
 			UICorner_23.CornerRadius = UDim.new(0, 4)
 
 			UICorner_23.Parent = Header
+
+
+
 			UIGradient_2.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 0.75), NumberSequenceKeypoint.new(0.50, 0.00), NumberSequenceKeypoint.new(1.00, 0.75)}
 
 			UIGradient_2.Parent = Header
+
+
+
 			local UIPadding_2 = Instance.new("UIPadding")
 
 			local UIListLayout_3 = Instance.new("UIListLayout")
 
 			local UICorner_8 = Instance.new("UICorner")
+
+
+
 			UIPadding_2.Parent = SectionContainer
 
 			UIPadding_2.PaddingBottom = UDim.new(0, 4)
@@ -784,6 +988,9 @@ dragify2(ToggleHideButton)
 			UIPadding_2.PaddingRight = UDim.new(0, 4)
 
 			UIPadding_2.PaddingTop = UDim.new(0, 4)
+
+
+
 			UIListLayout_3.Archivable = false
 
 			UIListLayout_3.Parent = SectionContainer
@@ -793,11 +1000,17 @@ dragify2(ToggleHideButton)
 			UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
 
 			UIListLayout_3.Padding = UDim.new(0, 4)
+
+
+
 			UICorner_8.CornerRadius = UDim.new(0, 4)
 
 			UICorner_8.Parent = SectionContainer
 
 			--End
+
+
+
 			function UpdateResults()
 
 				local search = string.lower(SearchBox.Text)
@@ -905,7 +1118,13 @@ dragify2(ToggleHideButton)
 				end
 
 			end
+
+
+
 			SearchBox.Changed:Connect(UpdateResults)
+
+
+
 			local size = 0
 
 			SectionContainer.ChildAdded:Connect(function(me)
@@ -987,6 +1206,9 @@ dragify2(ToggleHideButton)
 				end]]
 
 			end)
+
+
+
 			local PageButton = Instance.new("TextButton")
 
 			PageButton.Name = "PageButton"
@@ -1010,6 +1232,9 @@ dragify2(ToggleHideButton)
 			PageButton.TextTransparency = 0.5
 
 			PageButton.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 			PageButton.MouseButton1Down:Connect(function()
 
 				if Indicator.Visible == false then
@@ -1039,6 +1264,9 @@ dragify2(ToggleHideButton)
 				TS:Create(PageButton, TweenInfo.new(0.5), {TextTransparency = 0}):Play()
 
 				Indicator.Parent = PageButton
+
+
+
 				for i,v in pairs(Window:GetChildren()) do
 
 					if v:IsA("ScrollingFrame") and v.Name ~= "Tabs" and v.Name ~= "TitleBar" and v.Name ~= "UICorner" then
@@ -1048,10 +1276,19 @@ dragify2(ToggleHideButton)
 					end
 
 				end
+
+
+
 				Page.Visible = true
 
 			end)
+
+
+
 			local pagebuttons = {}
+
+
+
 			function pagebuttons:CreateButton(name, desc, callback)
 
 				name = name or "Button"
@@ -1075,6 +1312,9 @@ dragify2(ToggleHideButton)
 				local Ripple = Instance.new('LocalScript')
 
 				local Sample = Instance.new("ImageLabel")
+
+
+
 				Button.Name = "Button"
 
 				Button.Parent = SectionContainer
@@ -1082,9 +1322,18 @@ dragify2(ToggleHideButton)
 				Button.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
 
 				Button.Size = UDim2.new(1, 0, 0, 40)
+
+
+
 				UICorner.CornerRadius = UDim.new(0, 4)
 
-				UICorner.Parent = Button				Title.Name = "Title"
+				UICorner.Parent = Button
+
+
+
+
+
+				Title.Name = "Title"
 
 				Title.Parent = Button
 
@@ -1105,6 +1354,9 @@ dragify2(ToggleHideButton)
 				Title.TextSize = 12.000
 
 				Title.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 				Description.Name = "Description"
 
 				Description.Parent = Button
@@ -1126,6 +1378,9 @@ dragify2(ToggleHideButton)
 				Description.TextSize = 12.000
 
 				Description.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 				Caller.Name = "Caller"
 
 				Caller.Parent = Button
@@ -1146,11 +1401,20 @@ dragify2(ToggleHideButton)
 
 				Caller.TextSize = 14.000
 
-				Caller.TextTransparency = 1.000				Caller.MouseButton1Click:Connect(function()
+				Caller.TextTransparency = 1.000
+
+
+
+
+
+				Caller.MouseButton1Click:Connect(function()
 
 					callback()
 
 				end)
+
+
+
 				spawn(function()
 
 					local function QCZV_fake_script() -- Caller.Handler 
@@ -1158,6 +1422,9 @@ dragify2(ToggleHideButton)
 						local Ripple = Instance.new('LocalScript', Caller)
 
 						local ms = game.Players.LocalPlayer:GetMouse()
+
+
+
 						Sample.Name = "Sample"
 
 						Sample.Parent = Ripple
@@ -1171,9 +1438,15 @@ dragify2(ToggleHideButton)
 						Sample.ImageColor3 = Color3.fromRGB(135, 255, 135)
 
 						Sample.ImageTransparency = 0.600
+
+
+
 						local btn = Caller
 
 						local sample = Sample
+
+
+
 						btn.MouseButton1Click:Connect(function()
 
 							local c = sample:Clone()
@@ -1215,6 +1488,9 @@ dragify2(ToggleHideButton)
 					coroutine.wrap(QCZV_fake_script)()
 
 				end)
+
+
+
 				function UpdateButton:UpdateButton(name)
 
 					ButtonText.Text = name
@@ -1224,6 +1500,9 @@ dragify2(ToggleHideButton)
 				return UpdateButton
 
 			end
+
+
+
 			function pagebuttons:CreateLabel(name)
 
 				name = name or "Label"
@@ -1236,7 +1515,13 @@ dragify2(ToggleHideButton)
 
 				local _4pxShadow2px = Instance.new("ImageLabel")
 
-				local LabelContent = Instance.new("TextLabel")				Label.Name = "Label"
+				local LabelContent = Instance.new("TextLabel")
+
+
+
+
+
+				Label.Name = "Label"
 
 				Label.Parent = SectionContainer
 
@@ -1245,9 +1530,15 @@ dragify2(ToggleHideButton)
 				Label.BackgroundTransparency = 0.500
 
 				Label.Size = UDim2.new(1, 0, 0, 24)
+
+
+
 				UICorner_16.CornerRadius = UDim.new(0, 4)
 
 				UICorner_16.Parent = Label
+
+
+
 				_4pxShadow2px.Name = "4pxShadow(2px)"
 
 				_4pxShadow2px.Parent = Label
@@ -1271,6 +1562,9 @@ dragify2(ToggleHideButton)
 				_4pxShadow2px.ScaleType = Enum.ScaleType.Slice
 
 				_4pxShadow2px.SliceCenter = Rect.new(17, 17, 283, 283)
+
+
+
 				LabelContent.Name = "LabelContent"
 
 				LabelContent.Parent = Label
@@ -1302,6 +1596,9 @@ dragify2(ToggleHideButton)
 				return UpdateLabel2
 
 			end
+
+
+
 			function pagebuttons:CreateSlider(name,min,max,callback)
 
 				name = name or "Slider"
@@ -1341,6 +1638,9 @@ dragify2(ToggleHideButton)
 				local Shadow_1 = Instance.new("ImageLabel")
 
 				local Shadow_2 = Instance.new("ImageLabel")
+
+
+
 				Slider.Name = "Slider"
 
 				Slider.Parent = SectionContainer
@@ -1348,9 +1648,15 @@ dragify2(ToggleHideButton)
 				Slider.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
 
 				Slider.Size = UDim2.new(1, 0, 0, 40)
+
+
+
 				UICorner_17.CornerRadius = UDim.new(0, 4)
 
 				UICorner_17.Parent = Slider
+
+
+
 				Title_4.Name = "Title"
 
 				Title_4.Parent = Slider
@@ -1372,6 +1678,9 @@ dragify2(ToggleHideButton)
 				Title_4.TextSize = 12.000
 
 				Title_4.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 				Tracker.Name = "Tracker"
 
 				Tracker.Parent = Slider
@@ -1383,6 +1692,9 @@ dragify2(ToggleHideButton)
 				Tracker.Position = UDim2.new(0, 7, 1, -10)
 
 				Tracker.Size = UDim2.new(1, -14, 0, 2)
+
+
+
 				Indicator_3.Name = "Indicator"
 
 				Indicator_3.Parent = Tracker
@@ -1392,6 +1704,9 @@ dragify2(ToggleHideButton)
 				Indicator_3.BorderSizePixel = 0
 
 				Indicator_3.Size = UDim2.new(0, 0, 1, 0)
+
+
+
 				Shadow_1.Name = "Shadow_1"
 
 				Shadow_1.Parent = Indicator_3
@@ -1415,6 +1730,9 @@ dragify2(ToggleHideButton)
 				Shadow_1.ScaleType = Enum.ScaleType.Slice
 
 				Shadow_1.SliceCenter = Rect.new(17, 17, 283, 283)
+
+
+
 				TextButton_2.Parent = Indicator_3
 
 				TextButton_2.BackgroundColor3 = Color3.fromRGB(135, 255, 135)
@@ -1430,6 +1748,9 @@ dragify2(ToggleHideButton)
 				TextButton_2.TextColor3 = Color3.fromRGB(0, 0, 0)
 
 				TextButton_2.TextSize = 14.000
+
+
+
 				Shadow_2.Name = "Shadow_2"
 
 				Shadow_2.Parent = TextButton_2
@@ -1453,9 +1774,15 @@ dragify2(ToggleHideButton)
 				Shadow_2.ScaleType = Enum.ScaleType.Slice
 
 				Shadow_2.SliceCenter = Rect.new(17, 17, 283, 283)
+
+
+
 				UICorner_18.CornerRadius = UDim.new(0.5, 0)
 
 				UICorner_18.Parent = TextButton_2
+
+
+
 				Fade.Name = "Fade"
 
 				Fade.Parent = TextButton_2
@@ -1467,9 +1794,15 @@ dragify2(ToggleHideButton)
 				Fade.Position = UDim2.new(-0.5, 0, -0.5, 0)
 
 				Fade.Size = UDim2.new(2, 0, 2, 0)
+
+
+
 				UICorner_19.CornerRadius = UDim.new(0.5, 0)
 
 				UICorner_19.Parent = Fade
+
+
+
 				Value.Name = "Value"
 
 				Value.Parent = Slider
@@ -1481,9 +1814,15 @@ dragify2(ToggleHideButton)
 				Value.Position = UDim2.new(1, -47, 0, 4)
 
 				Value.Size = UDim2.new(0, 43, 0, 22)
+
+
+
 				UICorner_20.CornerRadius = UDim.new(0, 4)
 
 				UICorner_20.Parent = Value
+
+
+
 				ValueText.Name = "ValueText"
 
 				ValueText.Parent = Value
@@ -1503,6 +1842,12 @@ dragify2(ToggleHideButton)
 				ValueText.TextColor3 = Color3.fromRGB(227, 225, 228)
 
 				ValueText.TextSize = 12.000
+
+
+
+
+
+
 
 				local value
 
@@ -1531,6 +1876,9 @@ dragify2(ToggleHideButton)
 					spawn(function() callback(value) wait() ValueText.Text = mr(value) end)
 
 				end;
+
+
+
 				Sliderbutton.InputBegan:Connect(function(input)
 
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -1546,6 +1894,9 @@ dragify2(ToggleHideButton)
 					end
 
 				end)
+
+
+
 				Sliderbutton.InputEnded:Connect(function(input)
 
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -1561,6 +1912,9 @@ dragify2(ToggleHideButton)
 					end
 
 				end)
+
+
+
 				Sliderbutton.InputBegan:Connect(function(input)
 
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -1570,6 +1924,9 @@ dragify2(ToggleHideButton)
 					end
 
 				end)
+
+
+
 				game:GetService("UserInputService").InputChanged:Connect(function(input)
 
 					if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
@@ -1583,6 +1940,9 @@ dragify2(ToggleHideButton)
 				return library4	
 
 			end
+
+
+
 			function pagebuttons:CreateBox(name, icon, callback)
 
 				name = name or "Input Text Here..."
@@ -1614,6 +1974,9 @@ dragify2(ToggleHideButton)
 				local TextInput = Instance.new("TextBox")
 
 				local EditIcon = Instance.new("ImageLabel")
+
+
+
 				TextBox.Name = "TextBox"
 
 				TextBox.Parent = SectionContainer
@@ -1623,6 +1986,9 @@ dragify2(ToggleHideButton)
 				TextBox.BackgroundTransparency = 1.000
 
 				TextBox.Size = UDim2.new(1, 0, 0, 30)
+
+
+
 				Footer_3.Name = "Footer"
 
 				Footer_3.Parent = TextBox
@@ -1634,9 +2000,15 @@ dragify2(ToggleHideButton)
 				Footer_3.Position = UDim2.new(0, 0, 1, -8)
 
 				Footer_3.Size = UDim2.new(1, 0, 0, 8)
+
+
+
 				UICorner_21.CornerRadius = UDim.new(0, 4)
 
 				UICorner_21.Parent = Footer_3
+
+
+
 				Container_3.Name = "Container"
 
 				Container_3.Parent = TextBox
@@ -1648,9 +2020,15 @@ dragify2(ToggleHideButton)
 				Container_3.Size = UDim2.new(1, 0, 1, -1)
 
 				Container_3.ZIndex = 2
+
+
+
 				UICorner_22.CornerRadius = UDim.new(0, 4)
 
 				UICorner_22.Parent = Container_3
+
+
+
 				TextInput.Name = "TextInput"
 
 				TextInput.Parent = Container_3
@@ -1675,11 +2053,23 @@ dragify2(ToggleHideButton)
 
 				TextInput.TextSize = 12.000
 
-				TextInput.TextXAlignment = Enum.TextXAlignment.Left				TextInput.FocusLost:Connect(function()
+				TextInput.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
+
+
+				TextInput.FocusLost:Connect(function()
 
 					callback(TextInput.Text)
 
-				end)				EditIcon.Name = "EditIcon"
+				end)
+
+
+
+
+
+				EditIcon.Name = "EditIcon"
 
 				EditIcon.Parent = Container_3
 
@@ -1704,6 +2094,9 @@ dragify2(ToggleHideButton)
 				return UpdateBox
 
 			end
+
+
+
 			function pagebuttons:CreateBind(name, defaultkey, callback)
 
 				local name = name or "Keybind"
@@ -1731,6 +2124,9 @@ dragify2(ToggleHideButton)
 				local Sample = Instance.new("ImageLabel")
 
 				local UICorner_15 = Instance.new("UICorner")
+
+
+
 				Keybind.Name = "Keybind"
 
 				Keybind.Parent = SectionContainer
@@ -1740,6 +2136,9 @@ dragify2(ToggleHideButton)
 				Keybind.BackgroundTransparency = 1.000
 
 				Keybind.Size = UDim2.new(1, 0, 0, 30)
+
+
+
 				Footer_2.Name = "Footer"
 
 				Footer_2.Parent = Keybind
@@ -1751,9 +2150,15 @@ dragify2(ToggleHideButton)
 				Footer_2.Position = UDim2.new(0, 0, 1, -8)
 
 				Footer_2.Size = UDim2.new(1, 0, 0, 8)
+
+
+
 				UICorner_13.CornerRadius = UDim.new(0, 4)
 
 				UICorner_13.Parent = Footer_2
+
+
+
 				Container_2.Name = "Container"
 
 				Container_2.Parent = Keybind
@@ -1765,9 +2170,15 @@ dragify2(ToggleHideButton)
 				Container_2.Size = UDim2.new(1, 0, 1, -1)
 
 				Container_2.ZIndex = 2
+
+
+
 				UICorner_14.CornerRadius = UDim.new(0, 4)
 
 				UICorner_14.Parent = Container_2
+
+
+
 				Title_3.Name = "Title"
 
 				Title_3.Parent = Container_2
@@ -1789,6 +2200,9 @@ dragify2(ToggleHideButton)
 				Title_3.TextSize = 12.000
 
 				Title_3.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 				KButton.Name = "KButton"
 
 				KButton.Parent = Container_2
@@ -1810,6 +2224,9 @@ dragify2(ToggleHideButton)
 				KButton.TextColor3 = Color3.fromRGB(227, 225, 228)
 
 				KButton.TextSize = 12.000
+
+
+
 				Sample.Name = "Sample"
 
 				Sample.Parent = Ripple
@@ -1823,9 +2240,15 @@ dragify2(ToggleHideButton)
 				Sample.ImageColor3 = Color3.fromRGB(135, 255, 135)
 
 				Sample.ImageTransparency = 0.600
+
+
+
 				UICorner_15.CornerRadius = UDim.new(0, 4)
 
 				UICorner_15.Parent = KButton
+
+
+
 				local keybindtoggle = false
 
 				KButton.MouseButton1Click:Connect(function()
@@ -1869,6 +2292,9 @@ dragify2(ToggleHideButton)
 					end
 
 				end)
+
+
+
 				game:GetService("UserInputService").InputBegan:Connect(function(Key, IsNotFocused)
 
 					if IsNotFocused then return end
@@ -1912,7 +2338,13 @@ dragify2(ToggleHideButton)
 					end
 
 				end)
+
+
+
 				KButton.Text = defaultkey
+
+
+
 				function UpdateBind:UpdateBind(name)
 
 					Title_3.Text = name
@@ -1922,6 +2354,9 @@ dragify2(ToggleHideButton)
 				return UpdateBind
 
 			end
+
+
+
 			function pagebuttons:CreateToggle(title , desc, callback)
 
 				title = title or "Title"
@@ -1953,6 +2388,9 @@ dragify2(ToggleHideButton)
 				local TButton = Instance.new("TextButton")
 
 				local UICorner_4 = Instance.new("UICorner")
+
+
+
 				Toggle.Name = "Toggle"
 
 				Toggle.Parent = SectionContainer
@@ -1960,9 +2398,15 @@ dragify2(ToggleHideButton)
 				Toggle.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
 
 				Toggle.Size = UDim2.new(1, 0, 0, 40)
+
+
+
 				UICorner.CornerRadius = UDim.new(0, 4)
 
 				UICorner.Parent = Toggle
+
+
+
 				ToggleTitle.Name = "Title"
 
 				ToggleTitle.Parent = Toggle
@@ -1984,6 +2428,9 @@ dragify2(ToggleHideButton)
 				ToggleTitle.TextSize = 12.000
 
 				ToggleTitle.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 				Description.Name = "Description"
 
 				Description.Parent = Toggle
@@ -2005,6 +2452,9 @@ dragify2(ToggleHideButton)
 				Description.TextSize = 12.000
 
 				Description.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 				Indicator.Name = "Indicator"
 
 				Indicator.Parent = Toggle
@@ -2016,6 +2466,9 @@ dragify2(ToggleHideButton)
 				Indicator.Position = UDim2.new(1, -29, 0, 11)
 
 				Indicator.Size = UDim2.new(0, 18, 0, 18)
+
+
+
 				UIStroke.Name = "UIStroke"
 
 				UIStroke.Parent = Indicator
@@ -2029,6 +2482,9 @@ dragify2(ToggleHideButton)
 				UIStroke.Thickness = 2
 
 				UIStroke.Transparency = 0
+
+
+
 				Dot.Name = "Dot"
 
 				Dot.Parent = Indicator
@@ -2040,12 +2496,21 @@ dragify2(ToggleHideButton)
 				Dot.Position = UDim2.new(0, 2, 0, 2)
 
 				Dot.Size = UDim2.new(1, -4, 1, -4)
+
+
+
 				UICorner_2.CornerRadius = UDim.new(0.5, 0)
 
 				UICorner_2.Parent = Dot
+
+
+
 				UICorner_3.CornerRadius = UDim.new(0.5, 0)
 
 				UICorner_3.Parent = Indicator
+
+
+
 				TButton.Name = "TButton"
 
 				TButton.Parent = Toggle
@@ -2065,9 +2530,15 @@ dragify2(ToggleHideButton)
 				TButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 
 				TButton.TextSize = 14.000
+
+
+
 				UICorner_4.CornerRadius = UDim.new(0.5, 0)
 
 				UICorner_4.Parent = TButton
+
+
+
 				TButton.MouseButton1Click:Connect(function()
 
 					if not f then
@@ -2100,7 +2571,13 @@ dragify2(ToggleHideButton)
 
 				return UpdateToggle
 
-			end			function pagebuttons:CreateColorPicker(name, callback)
+			end
+
+
+
+
+
+			function pagebuttons:CreateColorPicker(name, callback)
 
 				-- Very Buggy
 
@@ -2137,6 +2614,9 @@ dragify2(ToggleHideButton)
 				local UICorner_4 = Instance.new("UICorner")
 
 				local ValueText2 = Instance.new("TextLabel")
+
+
+
 				ColorPicker.Name = "ColorPicker"
 
 				ColorPicker.Parent = SectionContainer
@@ -2144,9 +2624,15 @@ dragify2(ToggleHideButton)
 				ColorPicker.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
 
 				ColorPicker.Size = UDim2.new(1, 0, 0, 40)
+
+
+
 				UICorner.CornerRadius = UDim.new(0, 4)
 
 				UICorner.Parent = ColorPicker
+
+
+
 				Title.Name = "Title"
 
 				Title.Parent = ColorPicker
@@ -2168,6 +2654,9 @@ dragify2(ToggleHideButton)
 				Title.TextSize = 12.000
 
 				Title.TextXAlignment = Enum.TextXAlignment.Left
+
+
+
 				ColourGradientFrame.Name = "ColourGradientFrame"
 
 				ColourGradientFrame.Parent = ColorPicker
@@ -2189,14 +2678,23 @@ dragify2(ToggleHideButton)
 				ColourGradientFrame.TextColor3 = Color3.fromRGB(0, 0, 0)
 
 				ColourGradientFrame.TextSize = 14.000
+
+
+
 				UICorner_2.CornerRadius = UDim.new(0, 9)
 
 				UICorner_2.Parent = ColourGradientFrame
+
+
+
 				ColourGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 4)), ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)), ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 0)), ColorSequenceKeypoint.new(0.60, Color3.fromRGB(0, 255, 255)), ColorSequenceKeypoint.new(0.80, Color3.fromRGB(0, 0, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 255))}
 
 				ColourGradient.Name = "ColourGradient"
 
 				ColourGradient.Parent = ColourGradientFrame
+
+
+
 				Slider.Name = "Slider"
 
 				Slider.Parent = ColourGradientFrame
@@ -2212,9 +2710,15 @@ dragify2(ToggleHideButton)
 				Slider.TextColor3 = Color3.fromRGB(0, 0, 0)
 
 				Slider.TextSize = 14.000
+
+
+
 				UICorner_3.CornerRadius = UDim.new(5, 9)
 
 				UICorner_3.Parent = Slider
+
+
+
 				ColourPreview.Name = "ColourPreview"
 
 				ColourPreview.Parent = ColorPicker
@@ -2228,6 +2732,9 @@ dragify2(ToggleHideButton)
 				ColourPreview.Size = UDim2.new(0.00590497162, 0, 0.0980872661, 0)
 
 				ColourPreview.Visible = false
+
+
+
 				DarknessGradientFrame.Name = "DarknessGradientFrame"
 
 				DarknessGradientFrame.Parent = ColorPicker
@@ -2251,6 +2758,9 @@ dragify2(ToggleHideButton)
 				DarknessGradientFrame.TextColor3 = Color3.fromRGB(0, 0, 0)
 
 				DarknessGradientFrame.TextSize = 14.000
+
+
+
 				Slider_2.Name = "Slider"
 
 				Slider_2.Parent = DarknessGradientFrame
@@ -2270,11 +2780,17 @@ dragify2(ToggleHideButton)
 				Slider_2.TextColor3 = Color3.fromRGB(0, 0, 0)
 
 				Slider_2.TextSize = 14.000
+
+
+
 				DarknessGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 0, 0))}
 
 				DarknessGradient.Name = "DarknessGradient"
 
 				DarknessGradient.Parent = DarknessGradientFrame
+
+
+
 				Value2.Name = "Value"
 
 				Value2.Parent = ColorPicker
@@ -2286,9 +2802,15 @@ dragify2(ToggleHideButton)
 				Value2.Position = UDim2.new(0.915488005, -47, 0, 4)
 
 				Value2.Size = UDim2.new(0, 78, 0, 17)
+
+
+
 				UICorner_4.CornerRadius = UDim.new(0, 4)
 
 				UICorner_4.Parent = Value2
+
+
+
 				ValueText2.Name = "ValueText"
 
 				ValueText2.Parent = Value2
@@ -2311,68 +2833,170 @@ dragify2(ToggleHideButton)
 
 				ValueText2.TextSize = 12.000
 
-				ValueText2.TextWrapped = true				local colourGradientFrame = ColourGradientFrame
+				ValueText2.TextWrapped = true
+
+
+
+
+
+				local colourGradientFrame = ColourGradientFrame
 
 				local colourSlider = Slider_2
+
+
+
 				local darknessGradientFrame =  DarknessGradientFrame
 
 				local darknessSlider = Slider
-				local colourPreview = ColourPreview				local mouse = game:GetService("Players").LocalPlayer:GetMouse()
+
+
+
+				local colourPreview = ColourPreview
+
+
+
+
+
+				local mouse = game:GetService("Players").LocalPlayer:GetMouse()
+
+
+
 				local movingColourSlider = false
 
-				local movingDarknessSlider = false				colourSlider.MouseButton1Down:Connect(function()
+				local movingDarknessSlider = false
+
+
+
+
+
+				colourSlider.MouseButton1Down:Connect(function()
+
+
+
 					movingColourSlider = true
 
 				end)
 
 				colourGradientFrame.MouseButton1Down:Connect(function()
+
+
+
 					movingColourSlider = true
 
 				end)
+
+
+
 				darknessSlider.MouseButton1Down:Connect(function()
+
+
+
 					movingDarknessSlider = true
 
 				end)
 
 				darknessGradientFrame.MouseButton1Down:Connect(function()
+
+
+
 					movingDarknessSlider = true
 
-				end)				colourSlider.MouseButton1Up:Connect(function()
+				end)
+
+
+
+
+
+				colourSlider.MouseButton1Up:Connect(function()
+
+
+
 					movingColourSlider = false
 
 				end)
 
 				colourGradientFrame.MouseButton1Up:Connect(function()
+
+
+
 					movingColourSlider = false
 
 				end)
+
+
+
 				darknessSlider.MouseButton1Up:Connect(function()
+
+
+
 					movingDarknessSlider = false
 
 				end)
 
 				darknessGradientFrame.MouseButton1Up:Connect(function()
+
+
+
 					movingDarknessSlider = false
 
-				end)				mouse.Button1Up:Connect(function()
+				end)
+
+
+
+
+
+				mouse.Button1Up:Connect(function()
+
+
+
 					movingColourSlider = false
 
 					movingDarknessSlider = false
 
 				end)
 
+
+
+
+
+
+
 				mouse.Move:Connect(function()
+
+
+
 					if movingColourSlider then
+
+
+
 						local xOffset = (mouse.X - colourGradientFrame.AbsolutePosition.X)
+
+
+
 						xOffset = math.clamp(xOffset, 0, colourGradientFrame.AbsoluteSize.X)
+
+
+
 						local sliderPosNew = UDim2.new(0, xOffset, colourSlider.Position.Y)
 
 						colourSlider.Position = sliderPosNew
 
 					end
+
+
+
 					if movingDarknessSlider then
+
+
+
 						local xOffset = (mouse.X - colourGradientFrame.AbsolutePosition.X)
+
+
+
 						xOffset = math.clamp(xOffset, 0, colourGradientFrame.AbsoluteSize.X)
+
+
+
 						local sliderPosNew = UDim2.new(0, xOffset, colourSlider.Position.Y)
 
 						darknessSlider.Position = sliderPosNew
@@ -2381,19 +3005,52 @@ dragify2(ToggleHideButton)
 
 				end)
 
+
+
+
+
+
+
 				function returnColour(percentage, gradientKeyPoints)
+
+
+
 					local leftColour = gradientKeyPoints[1]
 
 					local rightColour = gradientKeyPoints[#gradientKeyPoints]
+
+
+
 					local lerpPercent = 0.5
 
-					local colour = leftColour.Value					for i = 1, #gradientKeyPoints - 1 do
+					local colour = leftColour.Value
+
+
+
+
+
+					for i = 1, #gradientKeyPoints - 1 do
+
+
+
 						if gradientKeyPoints[i].Time <= percentage and gradientKeyPoints[i + 1].Time >= percentage then
+
+
+
 							leftColour = gradientKeyPoints[i]
 
 							rightColour = gradientKeyPoints[i + 1]
+
+
+
 							lerpPercent = (percentage - leftColour.Time) / (rightColour.Time - leftColour.Time)
+
+
+
 							colour = leftColour.Value:Lerp(rightColour.Value, lerpPercent)
+
+
+
 							return colour
 
 						end
@@ -2401,24 +3058,75 @@ dragify2(ToggleHideButton)
 					end
 
 				end
+
+
+
 				function updateColourPreview()
+
+
+
 					local colourMinXPos = colourGradientFrame.AbsolutePosition.X
 
 					local colourMaxXPos = colourMinXPos + colourGradientFrame.AbsoluteSize.X
+
+
+
 					local colourXPixelSize = colourMaxXPos - colourMinXPos
+
+
+
 					local colourSliderX = colourSlider.AbsolutePosition.X
-					local colourXPos = (colourSliderX - colourMinXPos) / colourXPixelSize					local darknessMinXPos = darknessGradientFrame.AbsolutePosition.X
+
+
+
+					local colourXPos = (colourSliderX - colourMinXPos) / colourXPixelSize
+
+
+
+
+
+					local darknessMinXPos = darknessGradientFrame.AbsolutePosition.X
 
 					local darknessMaxXPos = darknessMinXPos + darknessGradientFrame.AbsoluteSize.X
-					local darknessXPixelSize = darknessMaxXPos - darknessMinXPos
-					local darknessSliderX = darknessSlider.AbsolutePosition.X
-					local darknessXPos = (darknessSliderX - darknessMinXPos) / darknessXPixelSize					--local darkness = returnColour(darknessXPos, darknessGradientFrame.DarknessGradient.Color.Keypoints)
 
-					--local darknessR, darknessG, darknessB = 255 - math.floor(darkness.R * 255), 255 - math.floor(darkness.G * 255), 255 - math.floor(darkness.B * 255)					local colour = returnColour(colourXPos, colourGradientFrame.ColourGradient.Color.Keypoints)
+
+
+					local darknessXPixelSize = darknessMaxXPos - darknessMinXPos
+
+
+
+					local darknessSliderX = darknessSlider.AbsolutePosition.X
+
+
+
+					local darknessXPos = (darknessSliderX - darknessMinXPos) / darknessXPixelSize
+
+
+
+
+
+					--local darkness = returnColour(darknessXPos, darknessGradientFrame.DarknessGradient.Color.Keypoints)
+
+					--local darknessR, darknessG, darknessB = 255 - math.floor(darkness.R * 255), 255 - math.floor(darkness.G * 255), 255 - math.floor(darkness.B * 255)
+
+
+
+
+
+					local colour = returnColour(colourXPos, colourGradientFrame.ColourGradient.Color.Keypoints)
 
 					local colourR, colourG, colourB = math.floor(colour.R * 255), math.floor(colour.G * 255), math.floor(colour.B * 255)
+
+
+
 					local resultColour = Color3.fromRGB(colourR, colourG, colourB)
+
+
+
 					colourPreview.BackgroundColor3 = resultColour
+
+
+
 					if ValueText2.Text ~= "0, 0, 0" then
 
 						ValueText2.TextScaled = true
@@ -2429,17 +3137,38 @@ dragify2(ToggleHideButton)
 
 					callback(resultColour)
 
-				end				colourSlider:GetPropertyChangedSignal("Position"):Connect(updateColourPreview)
+				end
+
+
+
+
+
+				colourSlider:GetPropertyChangedSignal("Position"):Connect(updateColourPreview)
 
 				darknessSlider:GetPropertyChangedSignal("Position"):Connect(updateColourPreview)
 
-			end			function CreateNotification(Name, Description, Callback)
+			end
+
+
+
+
+
+
+
+
+
+
+
+			function CreateNotification(Name, Description, Callback)
 
 				Name = Name or "Name"
 
 				Description = Description or "Description"
 
 				Callback = Callback or function() end
+
+
+
 				local Notification2 = Instance.new("Frame")
 
 				local UICorner = Instance.new("UICorner")
@@ -2477,6 +3206,9 @@ dragify2(ToggleHideButton)
 				local Yes = Instance.new("ImageButton")
 
 				local Sample_2 = Instance.new("ImageLabel")
+
+
+
 				Notification2.Name = "Notification 2"
 
 				Notification2.Parent = InsaneGay
@@ -2486,9 +3218,15 @@ dragify2(ToggleHideButton)
 				Notification2.Position = UDim2.new(1.25, -390, 0, 900)
 
 				Notification2.Size = UDim2.new(0, 344, 0, 64)
+
+
+
 				UICorner.CornerRadius = UDim.new(0, 4)
 
 				UICorner.Parent = Notification2
+
+
+
 				_4pxShadow2px.Name = "4pxShadow(2px)"
 
 				_4pxShadow2px.Parent = Notification2
@@ -2512,6 +3250,9 @@ dragify2(ToggleHideButton)
 				_4pxShadow2px.ScaleType = Enum.ScaleType.Slice
 
 				_4pxShadow2px.SliceCenter = Rect.new(17, 17, 283, 283)
+
+
+
 				TitleBar.Name = "Title Bar"
 
 				TitleBar.Parent = Notification2
@@ -2519,9 +3260,15 @@ dragify2(ToggleHideButton)
 				TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 36)
 
 				TitleBar.Size = UDim2.new(0, 344, 0, 22)
+
+
+
 				UICorner_2.CornerRadius = UDim.new(0, 4)
 
 				UICorner_2.Parent = TitleBar
+
+
+
 				Title.Name = "Title"
 
 				Title.Parent = TitleBar
@@ -2541,6 +3288,9 @@ dragify2(ToggleHideButton)
 				Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 
 				Title.TextSize = 17.000
+
+
+
 				Corners.Name = "Corners"
 
 				Corners.Parent = TitleBar
@@ -2550,9 +3300,15 @@ dragify2(ToggleHideButton)
 				Corners.Position = UDim2.new(0, 0, 0.799998879, 0)
 
 				Corners.Size = UDim2.new(0, 344, 0, 6)
+
+
+
 				UICorner_3.CornerRadius = UDim.new(0, 1)
 
 				UICorner_3.Parent = Corners
+
+
+
 				TextLabel.Parent = Notification2
 
 				TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2576,6 +3332,9 @@ dragify2(ToggleHideButton)
 				TextLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 				TextLabel.TextYAlignment = Enum.TextYAlignment.Top
+
+
+
 				Negative.Name = "Negative"
 
 				Negative.Parent = Notification2
@@ -2585,9 +3344,15 @@ dragify2(ToggleHideButton)
 				Negative.Position = UDim2.new(1.01569772, 0, 0.5625, 0)
 
 				Negative.Size = UDim2.new(0, 33, 0, 28)
+
+
+
 				UICorner_4.CornerRadius = UDim.new(0, 4)
 
 				UICorner_4.Parent = Negative
+
+
+
 				_4pxShadow2px_2.Name = "4pxShadow(2px)"
 
 				_4pxShadow2px_2.Parent = Negative
@@ -2611,6 +3376,9 @@ dragify2(ToggleHideButton)
 				_4pxShadow2px_2.ScaleType = Enum.ScaleType.Slice
 
 				_4pxShadow2px_2.SliceCenter = Rect.new(17, 17, 283, 283)
+
+
+
 				No.Name = "No"
 
 				No.Parent = Negative
@@ -2634,6 +3402,9 @@ dragify2(ToggleHideButton)
 				No.ImageRectSize = Vector2.new(36, 36)
 
 				No.ImageTransparency = 0.100
+
+
+
 				Sample.Name = "Sample"
 
 				Sample.Parent = No
@@ -2647,6 +3418,9 @@ dragify2(ToggleHideButton)
 				Sample.ImageColor3 = Color3.fromRGB(203, 203, 203)
 
 				Sample.ImageTransparency = 0.700
+
+
+
 				Positive.Name = "Positive"
 
 				Positive.Parent = Notification2
@@ -2656,9 +3430,15 @@ dragify2(ToggleHideButton)
 				Positive.Position = UDim2.new(1.01744187, 0, 0, 0)
 
 				Positive.Size = UDim2.new(0, 33, 0, 28)
+
+
+
 				UICorner_5.CornerRadius = UDim.new(0, 4)
 
 				UICorner_5.Parent = Positive
+
+
+
 				_4pxShadow2px_3.Name = "4pxShadow(2px)"
 
 				_4pxShadow2px_3.Parent = Positive
@@ -2682,6 +3462,9 @@ dragify2(ToggleHideButton)
 				_4pxShadow2px_3.ScaleType = Enum.ScaleType.Slice
 
 				_4pxShadow2px_3.SliceCenter = Rect.new(17, 17, 283, 283)
+
+
+
 				Yes.Name = "Yes"
 
 				Yes.Parent = Positive
@@ -2707,6 +3490,9 @@ dragify2(ToggleHideButton)
 				Yes.ImageRectSize = Vector2.new(36, 36)
 
 				Yes.ImageTransparency = 0.100
+
+
+
 				Sample_2.Name = "Sample"
 
 				Sample_2.Parent = Yes
@@ -2720,7 +3506,13 @@ dragify2(ToggleHideButton)
 				Sample_2.ImageColor3 = Color3.fromRGB(203, 203, 203)
 
 				Sample_2.ImageTransparency = 0.700
+
+
+
 				Instance.new("Sound", game:GetService("SoundService")).SoundId = "rbxassetid://1788243907"; game:GetService("SoundService").Sound:Play()
+
+
+
 				TS:Create(Notification2, TweenInfo.new(0.3, Enum.EasingStyle.Linear),{
 
 					Position = UDim2.new(
@@ -2730,6 +3522,9 @@ dragify2(ToggleHideButton)
 					)
 
 				}):Play()
+
+
+
 				No.MouseButton1Click:Connect(function()
 
 					spawn(function()
@@ -2793,6 +3588,9 @@ dragify2(ToggleHideButton)
 					Notification2:Remove()
 
 				end)
+
+
+
 				Yes.MouseButton1Click:Connect(function()
 
 					spawn(function()
@@ -2856,8 +3654,17 @@ dragify2(ToggleHideButton)
 					Notification2:Remove()
 
 				end)
+
+
+
 			end
+
+
+
 			return pagebuttons
+
+
+
 		end
 
 		return mytabbuttons
@@ -2867,4 +3674,7 @@ dragify2(ToggleHideButton)
 	return tabs
 
 end
+
+
+
 return library
